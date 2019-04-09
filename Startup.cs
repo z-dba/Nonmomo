@@ -14,10 +14,7 @@ namespace DotNetCoreSqlDb
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -30,7 +27,7 @@ namespace DotNetCoreSqlDb
             if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
                 services.AddDbContext<MyDatabaseContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
             else
-            services.AddDbContext<MyDatabaseContext>(options =>options.UseSqlite("DataSource=localdatabase.db"));
+                services.AddDbContext<MyDatabaseContext>(options =>options.UseSqlite("DataSource=localdatabase.db"));
             // Automatically perform database migration
             services.BuildServiceProvider().GetService<MyDatabaseContext>().Database.Migrate();
         }
